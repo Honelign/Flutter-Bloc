@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'homepage.dart';
 
@@ -18,7 +19,9 @@ class MyApp extends StatelessWidget {
         
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: BlocProvider(
+        create: (_)=>PersonsBloc(),
+        child: const HomePage()),
     );
   }
 }
