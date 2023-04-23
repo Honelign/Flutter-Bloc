@@ -5,9 +5,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-
-
+import 'bloc/bloc_actions.dart';
+import 'bloc/person.dart';
+import 'bloc/persons_bloc.dart';
 
 Future<Iterable<Person>> getPersons(String url) => HttpClient()
     .getUrl(Uri.parse(url))
@@ -16,45 +16,9 @@ Future<Iterable<Person>> getPersons(String url) => HttpClient()
     .then((str) => json.decode(str) as List<dynamic>)
     .then((list) => list.map((e) => Person.fromJson(e)));
 
-@immutable
-class FetchResult {
-  final Iterable<Person> persons;
-  final bool isRetrievedFromCache;
-
-  const FetchResult(
-      {required this.persons, required this.isRetrievedFromCache});
-  @override
-  String toString() {
-    return 'fetch result (isRetrivedFromCashe = $isRetrievedFromCache , persons= $persons)';
-  }
-}
-
 //loggin
 extension Log on Object {
   void log() => devtools.log(toString());
-}
-
-class PersonsBloc extends Bloc<LoadAction, FetchResult?> {
-  final Map<PersonUrl, Iterable<Person>> _chache = {};
-
-  PersonsBloc() : super(null) {
-    on<LoadPersonsAction>((event, emit) async {
-      final url = event.personUrl;
-
-      if (_chache.containsKey(url)) {
-        final chachedPersons = _chache[url];
-        final result =
-            FetchResult(persons: chachedPersons!, isRetrievedFromCache: true);
-        emit(result);
-      } else {
-        final person = await getPersons(url.urlString);
-        _chache[url] = person;
-        final result =
-            FetchResult(persons: person, isRetrievedFromCache: false);
-        emit(result);
-      }
-    });
-  }
 }
 
 extension Subscript<T> on Iterable<T> {
@@ -84,20 +48,18 @@ class _HomePageState extends State<HomePage> {
             children: [
               TextButton(
                   onPressed: () {
-                    context
-                        .read<PersonsBloc>()
-                        .add(const LoadPersonsAction(personUrl: PersonUrl.persons1));
+                    context.read<PersonsBloc>().add(const LoadPersonsAction(
+                        url: person1Url, loader: getPersons));
                   },
                   child: const Text('Load 1st Json')),
               TextButton(
                   onPressed: () {
-                    context
-                        .read<PersonsBloc>()
-                        .add(const LoadPersonsAction(personUrl: PersonUrl.persons2));
+                    context.read<PersonsBloc>().add(const LoadPersonsAction(
+                        url: person2Url, loader: getPersons));
                   },
                   child: const Text('Load 2nd Json'))
             ],
-          ), 
+          ),
           BlocBuilder<PersonsBloc, FetchResult?>(
             buildWhen: (previous, current) {
               return previous?.persons != current?.persons;
