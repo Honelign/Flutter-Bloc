@@ -1,47 +1,13 @@
 import 'dart:convert';
+import 'dart:developer' as devtools show log;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:math' as math show Random;
-import 'dart:developer' as devtools show log;
 
-@immutable
-abstract class LoadAction {
-  const LoadAction();
-}
 
-@immutable
-class LoadPersonsAction implements LoadAction {
-  final PersonUrl personUrl;
 
-  const LoadPersonsAction({required this.personUrl});
-}
 
-enum PersonUrl { persons1, persons2 }
-
-extension GetPersonUrl on PersonUrl {
-  String get urlString {
-    switch (this) {
-      case PersonUrl.persons1:
-        return 'http://10.0.2.2:5500/api/persons1.json';
-
-      case PersonUrl.persons2:
-        return 'http://10.0.2.2:5500/api/person2.json';
-    }
-  }
-}
-
-@immutable
-class Person {
-  final String name;
-  final int age;
-
-  const Person({required this.name, required this.age});
-  Person.fromJson(Map<String, dynamic> json)
-      : name = json['name'] as String,
-        age = json['age'] as int;
-}
 
 Future<Iterable<Person>> getPersons(String url) => HttpClient()
     .getUrl(Uri.parse(url))
@@ -59,7 +25,7 @@ class FetchResult {
       {required this.persons, required this.isRetrievedFromCache});
   @override
   String toString() {
-    return "fetch result (isRetrivedFromCashe = $isRetrievedFromCache , persons= $persons)";
+    return 'fetch result (isRetrivedFromCashe = $isRetrievedFromCache , persons= $persons)';
   }
 }
 
@@ -120,18 +86,18 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     context
                         .read<PersonsBloc>()
-                        .add(LoadPersonsAction(personUrl: PersonUrl.persons1));
+                        .add(const LoadPersonsAction(personUrl: PersonUrl.persons1));
                   },
-                  child: Text("Load 1st Json")),
+                  child: const Text('Load 1st Json')),
               TextButton(
                   onPressed: () {
                     context
                         .read<PersonsBloc>()
-                        .add(LoadPersonsAction(personUrl: PersonUrl.persons2));
+                        .add(const LoadPersonsAction(personUrl: PersonUrl.persons2));
                   },
-                  child: Text("Load 2nd Json"))
+                  child: const Text('Load 2nd Json'))
             ],
-          ),
+          ), 
           BlocBuilder<PersonsBloc, FetchResult?>(
             buildWhen: (previous, current) {
               return previous?.persons != current?.persons;
