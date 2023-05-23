@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           final button = TextButton(
               onPressed: () => cubit.pickRandomNames(),
-              child: Text("Pick a random name"));
+              child: const Text("Pick a random name"));
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               return button;
