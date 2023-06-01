@@ -28,4 +28,4 @@ class Note {
   @override
   String toString() =>'Note {title=$title}';
 }
-final mocjNotes=Iterable.generate(3,(i)=>Note(title:'Note ${i+1}'));
+final mockNotes=Iterable.generate(3,(i)=>Note(title:'Note ${i+1}'));
