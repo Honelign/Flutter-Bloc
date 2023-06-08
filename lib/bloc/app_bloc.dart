@@ -28,12 +28,30 @@ class AppBloc extends Bloc<AppAction, AppState> {
           fetchedNotes: null));
     });
     on<LoadNoteActions>(
-      (event, emit) {
-        emit( AppState(
+      (event, emit) async {
+        emit(AppState(
             isLoading: true,
             loginError: null,
             loginHandle: state.loginHandle,
             fetchedNotes: null));
+
+        //get the login handle
+        final loginHandle = state.loginHandle;
+        if (loginHandle != const LoginHandle.fooBar()) {
+          emit(AppState(
+              isLoading: false,
+              loginError: LoginErrors.invalidHandle,
+              loginHandle: loginHandle,
+              fetchedNotes: null));
+          return;
+        }
+        //we have a valid login handle here so we will work on the logic now
+        final notes = await notesApi.getNotes(loginHandle: loginHandle!);
+        emit(AppState(
+            isLoading: false,
+            loginError: null,
+            loginHandle: loginHandle,
+            fetchedNotes: notes));
       },
     );
   }
