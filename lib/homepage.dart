@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => AppBloc(
+          acceptedLogin: const LoginHandle.fooBar(),
               loginApi: LoginApi(),
               notesApi: NoteApi(),
             ),
