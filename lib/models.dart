@@ -2,23 +2,22 @@
 import 'package:flutter/material.dart';
 
 @immutable
-class LoginHandle{
+class LoginHandle {
   final String token;
-  const LoginHandle({
-    required this.token
-  });
-  const LoginHandle.fooBar(): token='foobar';
-  @override bool operator ==(covariant LoginHandle other)=>token == other.token;
-   
+  const LoginHandle({required this.token});
+  const LoginHandle.fooBar() : token = 'foobar';
+  @override
+  bool operator ==(covariant LoginHandle other) => token == other.token;
+
   @override
   // TODO: implement hashCode
   int get hashCode => token.hashCode;
   @override
-  String toString()=>'LoginHandle (token =$token)';
+  String toString() => 'LoginHandle (token =$token)';
 }
-enum LoginErrors{
-  invalidHandle
-}
+
+enum LoginErrors { invalidHandle }
+
 @immutable
 class Note {
   final String title;
@@ -26,6 +25,7 @@ class Note {
     required this.title,
   });
   @override
-  String toString() =>'Note {title=$title}';
+  String toString() => 'Note {title=$title}';
 }
-final mockNotes=Iterable.generate(3,(i)=>Note(title:'Note ${i+1}'));
+
+final mockNotes = Iterable.generate(3, (i) => Note(title: 'Note ${i + 1}'));

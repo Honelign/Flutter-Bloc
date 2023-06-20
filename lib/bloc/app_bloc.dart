@@ -10,8 +10,11 @@ class AppBloc extends Bloc<AppAction, AppState> {
   final NotesApiProtocol notesApi;
   final LoginHandle acceptedLogin;
 
-  AppBloc({required this.loginApi, required this.notesApi,required this.acceptedLogin})
-      : super(const AppState.empty()) {
+  AppBloc({
+    required this.loginApi,
+    required this.notesApi,
+    required this.acceptedLogin,
+  }) : super(const AppState.empty()) {
     on<LoginAction>((event, emit) async {
       emit(const AppState(
           isLoading: true,
