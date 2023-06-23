@@ -29,7 +29,7 @@ class AppBlocView<T extends AppBloc> extends StatelessWidget {
               appState.hasData!,
               fit: BoxFit.cover,
             );
-          } else {
+          } else {  
             return const Center(child: CircularProgressIndicator());
           }
         },
