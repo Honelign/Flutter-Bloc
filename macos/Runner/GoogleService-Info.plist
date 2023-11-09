@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAcpmOctVXjUv-A_3R63MtCl_1wnAhzYdA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>471380279403</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.testingblocCourse</string>
+	<key>PROJECT_ID</key>
+	<string>cloud-photo-cd688</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cloud-photo-cd688.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:471380279403:ios:e34b8f502c7e99685ff12e</string>
+</dict>
+</plist>

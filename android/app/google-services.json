@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "471380279403",
+    "project_id": "cloud-photo-cd688",
+    "storage_bucket": "cloud-photo-cd688.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471380279403:android:e8533b2cad92168d5ff12e",
+        "android_client_info": {
+          "package_name": "com.example.testingbloc_course"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471380279403-slol15i7vanas64m2mjgmphik7hbtbir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoIim0yKwokrQvElIb03fT9tcy0Z4sZjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471380279403-slol15i7vanas64m2mjgmphik7hbtbir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
