@@ -1,54 +1,96 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 
-class AppState {
+import 'package:testingbloc_course/auth/auth_error.dart';
+
+@immutable
+abstract class AppState {
   final bool isLoading;
-  final Uint8List? hasData;
-  final Object? error;
-  const AppState({
-    required this.isLoading,
-    this.hasData,
-    this.error,
-  });
-  const AppState.empty()
-      : isLoading = false,
-        hasData = null,
-        error = null;
+  final AuthError? authError;
+
+  const AppState({required this.isLoading, this.authError});
+}
+
+@immutable
+class AppStateLoggedIn extends AppState {
+  final User user;
+  final Iterable<Reference> images;
+
+  const AppStateLoggedIn({
+    required bool isLoading,
+    AuthError? authError,
+    required this.user,
+    required this.images,
+  }) : super(isLoading: isLoading, authError: authError);
 
   @override
-  String toString() => {
-        'isLoading': isLoading,
-        'hasData': hasData != null,
-        'error': error
-      }.toString();
-  @override
-  bool operator ==(covariant AppState other) =>
-      isLoading == other.isLoading &&
-      (hasData ?? []).isEqualTo(other.hasData ?? []) &&
-      error == other.error;
+  bool operator ==(other) {
+    final otherClass = other;
+    if (otherClass is AppStateLoggedIn) {
+      return user.uid == otherClass.user.uid &&
+          images == otherClass.images &&
+          isLoading == otherClass.isLoading;
+    } else {
+      return false;
+    }
+  }
 
   @override
   // TODO: implement hashCode
-  int get hashCode => Object.hash(
-        isLoading,
-        hasData,
-        error,
-      );
+  int get hashCode => Object.hash(user.uid, images);
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'AppStateLoggedIn{user: $user, images: $images, isLoading: $isLoading}';
+  }
 }
 
-extension Comparison<E> on List<E> {
-  bool isEqualTo(List<E> other) {
-    if (identical(this, other)) {
-      return true;
+@immutable
+class AppStateLoggedOut extends AppState {
+  const AppStateLoggedOut({
+    required bool isLoading,
+    AuthError? authError,
+  }) : super(
+          isLoading: isLoading,
+          authError: authError,
+        );
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'AppStateLoggedOut{isLoading: $isLoading, authError: $authError}';
+  }
+}
+
+@immutable
+class AppStateInRegistrationView extends AppState {
+  const AppStateInRegistrationView({
+    required bool isLoading,
+     AuthError? authError,
+  }) : super(
+          isLoading: isLoading,
+          authError: authError,
+        );
+}
+
+extension GetUser on AppState {
+  User? get user {
+    final cls = this;
+    if (cls is AppStateLoggedIn) {
+      return cls.user;
+    } else {
+      return null;
     }
-    if (length != other.length) {
-      return false;
+  }
+}
+
+extension GetImages on AppState {
+  Iterable<Reference>? get images {
+    final cls = this;
+    if (cls is AppStateLoggedIn) {
+      return cls.images;
+    } else {
+      return null;
     }
-    for (var i = 0; i < length; i++) {
-      if (this[i] != other[i]) {
-        return false;
-      }
-    }
-    return true;
   }
 }
